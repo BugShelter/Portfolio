@@ -1,7 +1,7 @@
-이름: [당신의 이름]
-직무: 백엔드 개발자 (Java)
-핵심 기술: Java 21, Spring Boot 3, Spring AI
-프로젝트 설명:
-이 포트폴리오 사이트는 Java 21의 Virtual Threads 기능을 사용하여 고성능으로 동작합니다.
-Gemini API와 RAG(검색 증강 생성) 기술을 적용하여, 사용자의 질문에 대해 내 이력서를 바탕으로 AI가 답변합니다.
-연락처: email@example.com
+이름: 김연철
+직업: 개발자
+기술 스택: Java 21, Spring Boot 3, TypeScript, React, Spring AI
+프로젝트 특징:
+1. Java 21의 Virtual Threads를 적용해 고성능 백엔드 구축.
+2. Gemini API와 RAG 기술을 활용한 AI 포트폴리오 챗봇 구현.
+연락처: koo05131@yahoo.co.kr
