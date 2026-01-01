@@ -39,10 +39,15 @@ public class ChatController {
         String userMessage = request.get("message");
 
         List<Document> similarDocs = vectorStore.similaritySearch(
-                SearchRequest.query(userMessage).withTopK(2)
+                SearchRequest.builder()
+                        .query(userMessage)
+                        .topK(3)
+                        .similarityThreshold(0.6)
+                        .build()
         );
+
         String context = similarDocs.stream()
-                .map(Document::getContent)
+                .map(Document::getText)
                 .collect(Collectors.joining("\n"));
 
         String prompt = """
