@@ -1,7 +1,47 @@
-이름: 김연철
-직업: 개발자
-기술 스택: Java 21, Spring Boot 3, TypeScript, React, Spring AI
-프로젝트 특징:
-1. Java 21의 Virtual Threads를 적용해 고성능 백엔드 구축.
-2. Gemini API와 RAG 기술을 활용한 AI 포트폴리오 챗봇 구현.
-연락처: koo05131@yahoo.co.kr
+[기본 정보]
+이름: 김연철 (Kim Yeoncheol)
+직무: Software Engineer (System & Backend)
+학력: 숭실대학교 AI융합학부 졸업 (학점: 3.98/4.5, 전공: 4.03/4.5)
+고등학교: 동화고등학교 졸업
+GitHub: https://github.com/ing-eoking
+
+[자기소개]
+"Never lose a holy curiosity!"
+끊임없이 의문을 가지고 질문하며, 더 나은 서비스를 만들어가는 개발자가 되고자 합니다.
+핵심 역량: C/C++, Python, Perl, Rust, Java, Linux 환경 개발
+
+[기술 스택 (Skills)]
+- 언어: C/C++ (48.7%), Perl (70%), Python (28.5%), Rust, Java, JavaScript
+- 분야: 시스템 프로그래밍, 백엔드 개발, 영상 처리, 임베딩 시스템
+- 도구: Linux, Git, Github Action, Docker
+
+[경력 (Experience)]
+1. 잼투인 주식회사 (JaM2in Inc.)
+ - 기간: 2023.07 ~ 현재 (재직 중)
+ - 직무: 사원 | 서버 개발팀
+ - 주요 업무: 
+   1) Arcus (DB 캐시) 개발: 리팩토링(모듈화, 메모리 최적화), 기능 추가(Set/Map 자료구조 개선), 버그 수정
+   2) Arcus C Client 개발: 메모리 누수 수정, 링킹 문제 해결, CI 테스트 추가
+   3) Arcus Perl Client 개발: C와 Perl 연동, CPAN 배포, 사용자 가이드 작성
+
+[프로젝트 (Projects)]
+1. Arcus Perl Client 개발
+ - 기간: 2024.07 ~ 2024.09 (3인 프로젝트)
+ - 내용: Arcus Memcached의 기능을 Perl 환경에서 사용할 수 있도록 클라이언트 라이브러리 개발
+ - 기여: 내부 구조 설계, Key-Value API 개발, CPAN 모듈 배포, 문서화
+ - 성과: Cache::Memcached::Fast 호환성 확보, 설치 자동화
+
+2. 자율 객체 추적 기기 (Rpi4_MOT)
+ - 기간: 2022.08 ~ 2022.11 (1인 개인 프로젝트)
+ - 내용: 라즈베리파이와 AI(Yolo, Deepsort)를 활용해 특정 객체를 따라다니는 기기 개발
+ - 기술: Python, C++, UDP 소켓 통신(멀티쓰레드), 영상처리
+ - 성과: 실시간 객체 감지 및 모터 제어 드라이버 구현
+
+3. 라즈베리파이를 활용한 3D 모션 캡처
+ - 기간: 2018.07 ~ 2018.10 (3인 팀 프로젝트, 팀장)
+ - 내용: 카메라로 사람의 움직임을 추적하여 가상 3D 캐릭터에 매핑하는 시스템
+ - 기술: C++, OpenCV(영상처리), OpenGL(3D 모델링)
+ - 수상: 스마트경진대회 최우수상 (숭실대학교 AI융합학부 주관)
+
+[수상 내역]
+- 2018 스마트경진대회 최우수상 (주제: 3D 모션 캡처)
