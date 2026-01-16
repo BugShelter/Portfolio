@@ -88,7 +88,7 @@ const HeroSection = () => {
           {/* 왼쪽: 로봇 (시선 따라가기) */}
           <div className="w-full md:w-5/12 flex justify-center md:justify-end order-1 md:order-1 relative">
             <div className="relative hover:scale-105 transition-transform duration-500">
-              <Robot />
+              <Robot isSearching={loading} />
               {/* 로봇 뒤 후광 효과 */}
               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] bg-cyan-500/20 rounded-full blur-[80px] -z-10 animate-pulse"></div>
             </div>
