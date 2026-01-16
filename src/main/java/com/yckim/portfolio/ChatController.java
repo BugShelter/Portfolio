@@ -37,13 +37,13 @@ public class ChatController {
 
             List<Document> documents = textReader.get();
             if (documents.isEmpty()) {
-                log.warn("⚠️ portfolio.txt 파일이 비어있습니다!");
+                log.warn("WARNING: Empty portfolio data file");
             } else {
                 vectorStore.add(documents);
-                log.info("✅ Java 21 포트폴리오 데이터 {}건 로딩 완료!", documents.size());
+                log.info("INFO: Load {} of poltfolio data", documents.size());
             }
         } catch (Exception e) {
-            log.error("❌ 데이터 로딩 중 에러 발생: ", e);
+            log.error("ERROR: ", e);
         }
     }
 
@@ -52,7 +52,6 @@ public class ChatController {
         String userMessage = request.get("message");
         log.info("📩 사용자 질문: {}", userMessage);
 
-        // 🔍 1. 유사도 검색 (0.4로 완화)
         List<Document> similarDocs = vectorStore.similaritySearch(
                 SearchRequest.builder()
                         .query(userMessage)
@@ -61,11 +60,9 @@ public class ChatController {
                         .build()
         );
 
-        // 🔍 2. [디버깅] 콘솔 출력 (여기서 getText()로 수정됨!)
         System.out.println("================= 검색 결과 =================");
         System.out.println("검색된 문서 개수: " + similarDocs.size());
         for (Document doc : similarDocs) {
-            // 🔴 수정된 부분: getContent() -> getText()
             String text = doc.getText();
             System.out.println("📄 내용: " + text.replace("\n", " ").substring(0, Math.min(text.length(), 50)) + "...");
         }
