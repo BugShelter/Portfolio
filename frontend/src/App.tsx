@@ -4,7 +4,7 @@ import Robot from './Robot';
 // --- 1. 네비게이션 메뉴 ---
 const Navbar = ({ activeSection }) => {
   const navLinks = [
-    { id: 'home', label: 'AI HOME' },
+    { id: 'home', label: 'HOME' },
     { id: 'about', label: 'ABOUT' },
     { id: 'skills', label: 'SKILLS' },
     { id: 'experience', label: 'EXPERIENCE' },
