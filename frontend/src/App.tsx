@@ -64,7 +64,7 @@ const HeroSection = () => {
     if (!question.trim()) return;
     setLoading(true);
     try {
-      const response = await fetch('http://localhost:8080/api/chat', {
+      const response = await fetch('http://localhost:8080/api/chat', { // TODO: API environment
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ message: question, sessionId: sessionId })
