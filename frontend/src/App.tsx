@@ -193,44 +193,87 @@ const AboutSection = () => (
 
 // [SKILLS]
 const SkillsSection = () => {
-  const skills = [
-    { name: "C / C++", pct: 85 },
-    { name: "Perl", pct: 90 },
-    { name: "Python", pct: 75 },
-    { name: "Java / Spring", pct: 70 },
-    { name: "Linux / System", pct: 80 },
-  ];
+  const [skills, setSkills] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  // 환경 변수 (Vite 기준)
+  const GIST_URL = import.meta.env.VITE_GIST_URL;
+
+  useEffect(() => {
+    const fetchGistData = async () => {
+      if (!GIST_URL) {
+        console.error("GIST_URL이 정의되지 않았습니다.");
+        setLoading(false);
+        return;
+      }
+
+      try {
+        const response = await fetch(`${GIST_URL}?t=${new Date().getTime()}`);
+        const fullData = await response.json();
+
+        // 디버깅용 로그
+        console.log("전체 데이터:", fullData);
+
+        // ★ JSON 구조에 맞춰 경로 수정됨 ★
+        // 경로: plugins -> languages -> favorites
+        if (fullData?.plugins?.languages?.favorites) {
+          const favorites = fullData.plugins.languages.favorites;
+
+          const formattedSkills = favorites.map((item) => ({
+            name: item.name,                  // 언어 이름 (예: "C++")
+            pct: Math.round(item.value * 100), // 0.1569 -> 16 (%)
+            color: item.color                 // 색상 코드 (예: "#f34b7d")
+          }))
+              .filter(skill => skill.pct > 0); // 0% 제외
+
+          setSkills(formattedSkills);
+        } else {
+          console.warn("데이터 구조가 다릅니다. plugins.languages.favorites를 찾을 수 없습니다.");
+        }
+      } catch (error) {
+        console.error("데이터 로딩 실패:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchGistData();
+  }, [GIST_URL]);
 
   return (
-      // 배경: Ultra Dark (#020617)
       <section id="skills" className="py-24 bg-[#020617]">
         <div className="max-w-5xl mx-auto px-6">
           <h2 className="text-3xl font-bold text-white mb-12 flex items-center gap-4">
             <span className="w-12 h-1 bg-[#38BDF8]"></span> SKILLS
           </h2>
-          <div className="space-y-8">
-            {skills.map((skill) => (
-                <div key={skill.name}>
-                  <div className="flex justify-between mb-2 text-[#cbd5e1] font-mono">
-                    <span>{skill.name}</span>
-                    <span>{skill.pct}%</span>
-                  </div>
-                  <div className="w-full bg-[#0F172A] rounded-full h-3 overflow-hidden">
-                    <div
-                        className="h-full bg-[#38BDF8] shadow-[0_0_10px_#38BDF8] transition-all duration-1000 ease-out"
-                        style={{ width: `${skill.pct}%` }}
-                    ></div>
-                  </div>
-                </div>
-            ))}
-          </div>
-          <div className="mt-12 flex flex-wrap gap-3">
-            {["Docker", "Git", "Github Actions", "Qdrant", "Redis", "MySQL", "OpenCV", "OpenGL"].map(tag => (
-                <span key={tag} className="px-4 py-2 bg-[#0F172A] rounded-full text-[#38BDF8] text-sm border border-[#38BDF8]/20 hover:border-[#38BDF8] transition-colors">
-                    # {tag}
-                </span>
-            ))}
-          </div>
+
+          {loading ? (
+              <div className="text-center py-10 text-[#64748b] animate-pulse">GitHub 데이터 동기화 중...</div>
+          ) : (
+              <div className="space-y-8">
+                {skills.map((skill) => (
+                    <div key={skill.name}>
+                      <div className="flex justify-between mb-2 text-[#cbd5e1] font-mono text-sm">
+                        <span>{skill.name}</span>
+                        <span>{skill.pct}%</span>
+                      </div>
+                      {/* 배경 막대 */}
+                      <div className="w-full bg-[#0F172A] rounded-full h-2.5 overflow-hidden border border-[#1E293B]">
+                        {/* 실제 데이터 막대: GitHub 공식 색상 적용 */}
+                        <div
+                            className="h-full shadow-[0_0_10px_rgba(255,255,255,0.1)] transition-all duration-1000 ease-out"
+                            style={{
+                              width: `${skill.pct}%`,
+                              // 데이터에 있는 color를 쓰거나, 없으면 기본 파란색 사용
+                              backgroundColor: skill.color || '#38BDF8',
+                              boxShadow: `0 0 10px ${skill.color || '#38BDF8'}40` // 은은한 발광 효과
+                            }}
+                        ></div>
+                      </div>
+                    </div>
+                ))}
+              </div>
+          )}
         </div>
       </section>
   );
