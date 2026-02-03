@@ -18,7 +18,6 @@ public class ChatController {
 
     @PostMapping
     public ResponseEntity<Map<String, String>> chat(@RequestBody ChatRequest request) {
-        // 비즈니스 로직은 Service에 위임
         String response = portfolioService.generateChatResponse(
                 request.getSessionId(),
                 request.getMessage()

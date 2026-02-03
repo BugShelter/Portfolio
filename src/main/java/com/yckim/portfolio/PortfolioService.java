@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.document.Document;
-import org.springframework.ai.reader.TextReader;
+import org.springframework.ai.reader.JsonReader;
 import org.springframework.ai.vectorstore.SearchRequest;
 import org.springframework.ai.vectorstore.VectorStore;
 import org.springframework.beans.factory.annotation.Value;
@@ -26,21 +26,18 @@ public class PortfolioService {
     private final VectorStore vectorStore;
     private final StringRedisTemplate redisTemplate;
 
-    @Value("classpath:portfolio.txt")
+    @Value("classpath:portfolio.jsonl")
     private Resource portfolioData;
 
-    /**
-     * 앱 시작 시 포트폴리오 텍스트 파일을 벡터 스토어에 로드
-     */
     @PostConstruct
     public void init() {
         try {
-            TextReader textReader = new TextReader(portfolioData);
-            textReader.getCustomMetadata().put("charset", "UTF-8");
-            List<Document> documents = textReader.get();
+            JsonReader jsonReader = new JsonReader(portfolioData, "text"); //
+            List<Document> documents = jsonReader.get();
+
             if (!documents.isEmpty()) {
                 vectorStore.add(documents);
-                log.info("✅ SUCCESS: Portfolio data indexed in VectorStore");
+                log.info("✅ SUCCESS: Spring AI JsonReader loaded {} documents", documents.size());
             }
         } catch (Exception e) {
             log.error("❌ ERROR: Failed to load portfolio data", e);
