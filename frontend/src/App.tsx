@@ -314,12 +314,6 @@ const ProjectsSection = () => (
         <div className="grid md:grid-cols-3 gap-6">
           {[
             {
-              title: "Arcus Perl Client",
-              period: "2024.07 ~ 2024.09 (3인)",
-              desc: "Perl 환경에서 Arcus Memcached를 사용할 수 있도록 클라이언트 라이브러리를 개발하고 CPAN에 배포.",
-              tags: "Perl / C / Linux"
-            },
-            {
               title: "자율 객체 추적 기기",
               period: "2022.08 ~ 2022.11 (개인)",
               desc: "라즈베리파이와 Yolo/Deepsort를 활용해 특정 객체를 실시간으로 추적하고 따라가는 기기 개발.",
