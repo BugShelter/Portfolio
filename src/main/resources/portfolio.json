@@ -1,0 +1,12 @@
+[
+  {"group": "Identity", "name": "김연철", "role": "System & Backend Engineer", "github": "https://github.com/ing-eoking", "email": "koo05131@naver.com"},
+  {"group": "Education", "school": "숭실대학교", "major": "AI융합학부", "gpa": "3.98/4.5", "status": "졸업"},
+  {"group": "Skill_Set", "languages": ["C", "C++", "Rust", "Perl", "Python"], "domain": ["System Programming", "DB Cache", "Embedded AI"]},
+  {"group": "Experience", "company": "잼투인(JaM2in)", "period": "2023.07 - 현재", "team": "서버 개발팀"},
+  {"group": "Work_Detail", "subject": "Arcus Cache", "tasks": ["코드 리팩토링", "버그 수정", "신규 기능 개발"]},
+  {"group": "Work_Detail", "subject": "Arcus C Client", "tasks": ["기능 개발", "문서화"]},
+  {"group": "Work_Detail", "subject": "Arcus Perl Client", "tasks": ["구조 설계", "주요 API 개발", "CPAN 배포"]},
+  {"group": "Project", "title": "Rpi4_MOT", "tech": ["Python", "Yolo", "Deepsort"], "summary": "실시간 객체 감지 및 모터 제어"},
+  {"group": "Personal", "hobby": ["주짓수", "미술"]},
+  {"group": "Project", "title": "3D 모션 캡처", "tech": ["C++", "OpenCV", "OpenGL"], "summary": "인체 움직임 매핑 (스마트경진대회 최우수상)"}
+]

@@ -26,7 +26,7 @@ public class PortfolioService {
     private final VectorStore vectorStore;
     private final StringRedisTemplate redisTemplate;
 
-    @Value("classpath:portfolio.jsonl")
+    @Value("classpath:portfolio.json")
     private Resource portfolioData;
 
     @PostConstruct
@@ -38,6 +38,8 @@ public class PortfolioService {
             if (!documents.isEmpty()) {
                 vectorStore.add(documents);
                 log.info("✅ SUCCESS: Spring AI JsonReader loaded {} documents", documents.size());
+            } else {
+                log.warn("⚠️ WARNING: Empty portfolio data");
             }
         } catch (Exception e) {
             log.error("❌ ERROR: Failed to load portfolio data", e);

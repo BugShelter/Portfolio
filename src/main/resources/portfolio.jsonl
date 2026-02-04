@@ -1,5 +1,0 @@
-{"text": "김연철(Kim Yeoncheol), Software Engineer (System & Backend). 숭실대학교 AI융합학부 졸업 (학점: 3.98/4.5). GitHub: https://github.com/ing-eoking", "category": "basic_info"}
-{"text": "핵심 역량: C/C++, Python, Perl, Rust, Java, Linux 환경 개발. 끊임없이 의문을 가지고 질문하며 서비스를 개선하는 개발자입니다.", "category": "intro"}
-{"text": "잼투인 주식회사 (JaM2in Inc.) 서버 개발팀 (2023.07~현재): Arcus(DB 캐시) 리팩토링, 메모리 최적화, C/Perl Client 개발 및 CPAN 배포.", "category": "experience", "company": "JaM2in"}
-{"text": "프로젝트 - 자율 객체 추적 기기 (Rpi4_MOT) (2022.08~2022.11): Yolo, Deepsort, 라즈베리파이 활용 실시간 객체 감지 및 모터 제어.", "category": "project", "tags": ["Python", "AI", "RaspberryPi"]}
-{"text": "프로젝트 - 3D 모션 캡처 (2018.07~2018.10): OpenCV와 OpenGL을 활용한 인체 움직임 매핑 시스템. 스마트경진대회 최우수상 수상.", "category": "project", "tags": ["C++", "OpenCV", "OpenGL"]}
