@@ -7,6 +7,6 @@
   {"group": "Work_Detail", "subject": "Arcus C Client", "tasks": ["기능 개발", "문서화"]},
   {"group": "Work_Detail", "subject": "Arcus Perl Client", "tasks": ["구조 설계", "주요 API 개발", "CPAN 배포"]},
   {"group": "Project", "title": "Rpi4_MOT", "tech": ["Python", "Yolo", "Deepsort"], "summary": "실시간 객체 감지 및 모터 제어"},
-  {"group": "Personal", "hobby": ["주짓수", "미술"]},
-  {"group": "Project", "title": "3D 모션 캡처", "tech": ["C++", "OpenCV", "OpenGL"], "summary": "인체 움직임 매핑 (스마트경진대회 최우수상)"}
+  {"group": "Project", "title": "3D 모션 캡처", "tech": ["C++", "OpenCV", "OpenGL"], "summary": "인체 움직임 매핑 (스마트경진대회 최우수상)"},
+  {"group": "Personal", "hobby": ["주짓수", "미술"]}
 ]
