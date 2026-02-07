@@ -21,7 +21,8 @@ import java.util.stream.Collectors;
 @Service
 public class PortfolioService {
 
-    private final ChatClient chatClient;
+    private final ChatClient geminiChatClient;
+    private final ChatClient ollamaChatClient;
     private final VectorStore vectorStore;
     private final StringRedisTemplate redisTemplate;
 
@@ -29,13 +30,14 @@ public class PortfolioService {
     private Resource portfolioData;
 
     public PortfolioService(
-            ChatClient.Builder chatClientBuilder,
+            // @Qualifier를 이용해 Config에서 만든 빈을 정확히 주입받습니다.
+            @Qualifier("geminiChatClient") ChatClient geminiChatClient,
+            @Qualifier("ollamaChatClient") ChatClient ollamaChatClient,
             VectorStore vectorStore,
             StringRedisTemplate redisTemplate
-            //@Qualifier("ollamaChatModel") org.springframework.ai.ollama.OllamaChatModel ollamaChatModel // 로컬용
     ) {
-        // 만약 채팅 답변을 로컬(Llama)로 하고 싶다면 빌더에 ollamaChatModel을 세팅
-        this.chatClient = chatClientBuilder.build();
+        this.geminiChatClient = geminiChatClient;
+        this.ollamaChatClient = ollamaChatClient;
         this.vectorStore = vectorStore;
         this.redisTemplate = redisTemplate;
     }
@@ -113,9 +115,25 @@ public class PortfolioService {
                 [지침] 제공된 정보만 바탕으로 친절하게 답변해줘. 모르는 내용은 억지로 꾸며내지 마.
                 """.formatted(history, context, userMsg);
 
-        return chatClient.prompt()
-                .user(prompt)
-                .call()
-                .content();
+        try {
+            log.info("🚀 Gemini 호출 중...");
+            // Gemini 클라이언트 사용
+            return geminiChatClient.prompt()
+                    .user(prompt)
+                    .call()
+                    .content();
+        } catch (Exception e) {
+            log.warn("⚠️ Gemini 오류 발생! Ollama로 전환합니다. (에러: {})", e.getMessage());
+            try {
+                // Ollama 클라이언트 사용 (Fallback)
+                return ollamaChatClient.prompt()
+                        .user(prompt)
+                        .call()
+                        .content();
+            } catch (Exception ex) {
+                log.error("❌ 모든 AI 호출 실패", ex);
+                return "현재 AI 서비스 응답이 불가능합니다.";
+            }
+        }
     }
 }

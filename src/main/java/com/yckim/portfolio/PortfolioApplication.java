@@ -9,7 +9,11 @@ import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 public class PortfolioApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(PortfolioApplication.class, args);
+        try {
+            SpringApplication.run(PortfolioApplication.class, args);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }
