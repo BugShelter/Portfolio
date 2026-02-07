@@ -1,13 +1,13 @@
 package com.yckim.portfolio.service;
 
 import jakarta.annotation.PostConstruct;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.document.Document;
 import org.springframework.ai.reader.JsonReader;
 import org.springframework.ai.vectorstore.SearchRequest;
 import org.springframework.ai.vectorstore.VectorStore;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -19,15 +19,26 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @Service
-@RequiredArgsConstructor
 public class PortfolioService {
 
-    private final ChatClient.Builder chatClientBuilder;
+    private final ChatClient chatClient;
     private final VectorStore vectorStore;
     private final StringRedisTemplate redisTemplate;
 
     @Value("classpath:portfolio.json")
     private Resource portfolioData;
+
+    public PortfolioService(
+            ChatClient.Builder chatClientBuilder,
+            VectorStore vectorStore,
+            StringRedisTemplate redisTemplate
+            //@Qualifier("ollamaChatModel") org.springframework.ai.ollama.OllamaChatModel ollamaChatModel // 로컬용
+    ) {
+        // 만약 채팅 답변을 로컬(Llama)로 하고 싶다면 빌더에 ollamaChatModel을 세팅
+        this.chatClient = chatClientBuilder.build();
+        this.vectorStore = vectorStore;
+        this.redisTemplate = redisTemplate;
+    }
 
     @PostConstruct
     public void init() {
@@ -102,8 +113,8 @@ public class PortfolioService {
                 [지침] 제공된 정보만 바탕으로 친절하게 답변해줘. 모르는 내용은 억지로 꾸며내지 마.
                 """.formatted(history, context, userMsg);
 
-        return chatClientBuilder.build()
-                .prompt(prompt)
+        return chatClient.prompt()
+                .user(prompt)
                 .call()
                 .content();
     }
