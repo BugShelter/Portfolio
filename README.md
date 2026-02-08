@@ -4,7 +4,7 @@ RAG와 Hybrid LLM 전략을 적용한 대화형 포트폴리오 프로젝트
 
 ## Overview
 
-사용자가 저의 이력과 기술 스택에 대해 자연어로 질문하고 답변받을 수 있는 AI 에이전트
+사용자가 이력과 기술 스택에 대해 자연어로 질문하고 답변받을 수 있는 AI 서비스
 
 - Spring AI를 기반으로 RAG(검색 증강 생성) 패턴을 구현
 - Gemini API와 로컬 LLM(EXAONE)을 결합한 하이브리드 아키텍처
@@ -13,38 +13,36 @@ RAG와 Hybrid LLM 전략을 적용한 대화형 포트폴리오 프로젝트
 
 ```mermaid
 graph TD
-    classDef frontend fill:#E1F5FE,stroke:#01579B,stroke-width:2px,color:black;
-    classDef backend fill:#E8F5E9,stroke:#2E7D32,stroke-width:2px,color:black;
-    classDef ai fill:#FFF3E0,stroke:#EF6C00,stroke-width:2px,color:black;
-    classDef db fill:#FFEBEE,stroke:#C62828,stroke-width:2px,color:black;
-    classDef fail stroke:#C62828,stroke-width:2px,stroke-dasharray: 5 5,color:red;
+    %% 스타일 정의
+    classDef init fill:#E1F5FE,stroke:#01579B,color:black;
+    classDef runtime fill:#E8F5E9,stroke:#2E7D32,color:black;
+    classDef db fill:#FFF3E0,stroke:#EF6C00,color:black;
+    classDef ai fill:#F3E5F5,stroke:#7B1FA2,color:black;
 
-    User([User / Client]) -->|1. Question| Controller[API Controller]:::backend
-    Controller -->|2. Process| Service[Service Layer]:::backend
-
-    subgraph Memory_System [Memory Management]
-        direction TB
-        Service <-->|Load/Save History| Redis[(Redis / Session)]:::db
+    %% 1. 서버 시작 시 (Init)
+    subgraph Startup_Phase [App Startup - PostConstruct]
+        Json[portfolio.json] -->|Load| Reader[JsonReader]:::init
+        Reader -->|Convert| Docs[List Document]:::init
+        Docs -->|Save & Embed| Qdrant[(Qdrant Vector DB)]:::db
     end
 
-    subgraph RAG_System [RAG Pipeline]
-        direction TB
-        Service -->|3. Generate Embedding| EmbedModel[Google Embedding]:::ai
-        EmbedModel -->|4. Vector Search| Qdrant[(Qdrant Vector DB)]:::db
-        Qdrant -->|5. Retrieve Context| Service
-    end
-    
-    subgraph LLM_Strategy [Hybrid LLM Engine]
-        direction TB
-        Service -->|6. Request with Context| Gemini{Google Gemini}:::ai
-        Gemini -->|Success| FinalRes[Generate Response]:::ai
-        Gemini -.->|Fail / Quota Exceeded| LocalLLM{Local Ollama}:::fail
-        LocalLLM -->|Backup Response| FinalRes
-    end
+    %% 2. 사용자 채팅 시 (Runtime)
+    subgraph Chat_Phase [User Chat Flow]
+        User([User]) -->|Question| Service[PortfolioService]:::runtime
+        
+        %% RAG 검색 (Service -> VectorStore)
+        Service -->|similaritySearch| Qdrant
+        Qdrant -->|Return Docs| Service
+        
+        %% Redis 기록
+        Service <-->|Get_Save History| Redis[(Redis)]:::db
 
-    FinalRes -->|7. Final Answer| User
-
-    class User frontend;
+        %% AI 호출 (Gemini -> Fail -> Ollama)
+        Service -->|Prompt| Gemini{Gemini Client}:::ai
+        Gemini -->|Success| Response([Response])
+        Gemini -.->|Exception| Ollama{Ollama Client}:::ai
+        Ollama -->|Fallback Response| Response
+    end
 ```
 
 ## Technical Features
