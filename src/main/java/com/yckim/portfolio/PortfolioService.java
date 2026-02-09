@@ -118,7 +118,11 @@ public class PortfolioService {
         try {
             log.info("🚀 Gemini 호출 중...");
             // Gemini 클라이언트 사용
-            return geminiChatClient.prompt()
+
+
+
+
+            return ollamaChatClient.prompt()
                     .user(prompt)
                     .call()
                     .content();

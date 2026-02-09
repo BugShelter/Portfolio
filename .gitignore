@@ -4,10 +4,11 @@ build/
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
 !**/src/test/**/build/
-
-### STS ###
 .env
 frontend/.env
+src/main/resources/portfolio.json
+
+### STS ###
 .apt_generated
 .classpath
 .factorypath
