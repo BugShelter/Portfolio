@@ -1,7 +1,7 @@
 package com.yckim.portfolio.controller;
 
-import com.yckim.portfolio.dto.ChatRequest;
-import com.yckim.portfolio.service.PortfolioService;
+import com.yckim.portfolio.dto.ChatDTO;
+import com.yckim.portfolio.service.ChatService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,11 +14,11 @@ import java.util.Map;
 @CrossOrigin(origins = "http://localhost:5173")
 public class ChatController {
 
-    private final PortfolioService portfolioService;
+    private final ChatService ChatService;
 
     @PostMapping
-    public ResponseEntity<Map<String, String>> chat(@RequestBody ChatRequest request) {
-        String response = portfolioService.generateChatResponse(
+    public ResponseEntity<Map<String, String>> chat(@RequestBody ChatDTO request) {
+        String response = ChatService.generateChatResponse(
                 request.getSessionId(),
                 request.getMessage()
         );

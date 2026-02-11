@@ -5,7 +5,7 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class ChatRequest {
+public class ChatDTO {
     private String message;
     private String sessionId;
 }

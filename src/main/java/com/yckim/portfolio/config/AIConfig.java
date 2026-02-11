@@ -9,9 +9,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 
 @Configuration
-public class ChatClientConfig {
-    @Bean
-    @Primary
+public class AIConfig {
+    @Bean @Primary
     public ChatClient geminiChatClient(@Qualifier("googleGenAiChatModel") ChatModel chatModel) {
         return ChatClient.create(chatModel);
     }
@@ -21,8 +20,7 @@ public class ChatClientConfig {
         return ChatClient.create(chatModel);
     }
 
-    @Bean
-    @Primary
+    @Bean @Primary
     public EmbeddingModel primaryEmbeddingModel(@Qualifier("googleGenAiTextEmbedding") EmbeddingModel geminiEmbedding) {
         return geminiEmbedding;
     }
