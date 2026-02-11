@@ -11,18 +11,16 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/chat")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "http://localhost:5173")
 public class ChatController {
 
-    private final ChatService ChatService;
+    private final ChatService chatService;
 
     @PostMapping
     public ResponseEntity<Map<String, String>> chat(@RequestBody ChatDTO request) {
-        String response = ChatService.generateChatResponse(
+        String response = chatService.generateChatResponse(
                 request.getSessionId(),
                 request.getMessage()
         );
-
         return ResponseEntity.ok(Map.of("response", response));
     }
 }
