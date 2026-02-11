@@ -30,7 +30,6 @@ public class PortfolioService {
     private Resource portfolioData;
 
     public PortfolioService(
-            // @Qualifier를 이용해 Config에서 만든 빈을 정확히 주입받습니다.
             @Qualifier("geminiChatClient") ChatClient geminiChatClient,
             @Qualifier("ollamaChatClient") ChatClient ollamaChatClient,
             VectorStore vectorStore,
@@ -59,14 +58,8 @@ public class PortfolioService {
         }
     }
 
-    /**
-     * 채팅 메인 로직
-     */
     public String generateChatResponse(String sessionId, String userMessage) {
-        // 1. Redis에서 이전 대화 내역 가져오기
         String history = getChatHistory(sessionId);
-
-        // 2. 벡터 스토어에서 유사 문서 검색 (RAG)
         List<Document> similarDocs = vectorStore.similaritySearch(
                 SearchRequest.builder()
                         .query(userMessage)
@@ -83,10 +76,7 @@ public class PortfolioService {
                 .map(Document::getText)
                 .collect(Collectors.joining("\n"));
 
-        // 3. AI에게 질문 던지기
         String response = callAiModel(history, context, userMessage);
-
-        // 4. 새로운 대화 내용 Redis 저장
         saveChatHistory(sessionId, userMessage, response);
 
         return response;
@@ -116,18 +106,11 @@ public class PortfolioService {
                 """.formatted(history, context, userMsg);
 
         try {
-            log.info("🚀 Gemini 호출 중...");
-            // Gemini 클라이언트 사용
-
-
-
-
-            return ollamaChatClient.prompt()
+            return geminiChatClient.prompt()
                     .user(prompt)
                     .call()
                     .content();
         } catch (Exception e) {
-            log.warn("⚠️ Gemini 오류 발생! Ollama로 전환합니다. (에러: {})", e.getMessage());
             try {
                 // Ollama 클라이언트 사용 (Fallback)
                 return ollamaChatClient.prompt()
@@ -135,7 +118,7 @@ public class PortfolioService {
                         .call()
                         .content();
             } catch (Exception ex) {
-                log.error("❌ 모든 AI 호출 실패", ex);
+                log.error("Failed to call AI(Gemini : {}, Ollama : {}", e.getMessage(), ex.getMessage());
                 return "현재 AI 서비스 응답이 불가능합니다.";
             }
         }
