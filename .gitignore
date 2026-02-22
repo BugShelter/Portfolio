@@ -5,8 +5,7 @@ build/
 !**/src/main/**/build/
 !**/src/test/**/build/
 .env
-frontend/.env
-src/main/resources/portfolio.json
+src/main/resources/portfolio.*
 
 ### STS ###
 .apt_generated
