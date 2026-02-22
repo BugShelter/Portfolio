@@ -6,6 +6,8 @@ build/
 !**/src/test/**/build/
 .env
 src/main/resources/portfolio.*
+qdrant_data/
+redis_data/
 
 ### STS ###
 .apt_generated
