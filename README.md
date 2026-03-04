@@ -60,15 +60,6 @@ graph TD
 
 ## Tech Stack
 
-### Frontend
-| Category | Technology | Version |
-| :--- | :--- | :--- |
-| **Language** | TypeScript | **5.9.3** |
-| **Framework** | React | **19.2.3** |
-| **Styling** | Tailwind CSS | **4.1.18** |
-| **Build Tool** | Vite | **7.3.0** |
-| **Linting** | ESLint | 9.x |
-
 ### Backend & AI
 | Category | Technology | Version |
 | :--- | :--- | :--- |
