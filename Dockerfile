@@ -1,4 +1,4 @@
-FROM eclipse-temurin:17-jre-alpine
+FROM amazoncorretto:25-alpine
 
 RUN addgroup -S spring && adduser -S spring -G spring
 WORKDIR /app
