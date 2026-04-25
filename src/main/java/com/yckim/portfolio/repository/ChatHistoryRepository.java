@@ -12,6 +12,8 @@ import java.util.List;
 public class ChatHistoryRepository {
     private final StringRedisTemplate redisTemplate;
 
+    private static final int MAX_HISTORY_SIZE = 100;
+
     public String getHistory(String sessionId) {
         if (sessionId == null) return "";
         List<String> history = redisTemplate.opsForList().range("chat:" + sessionId, 0, -1);
@@ -21,6 +23,9 @@ public class ChatHistoryRepository {
     public void saveHistory(String sessionId, String userMsg, String aiMsg) {
         String key = "chat:" + sessionId;
         redisTemplate.opsForList().rightPushAll(key, "User: " + userMsg, "AI: " + aiMsg);
+
+        redisTemplate.opsForList().trim(key, -MAX_HISTORY_SIZE, -1);
+
         redisTemplate.expire(key, Duration.ofHours(1));
     }
 }
