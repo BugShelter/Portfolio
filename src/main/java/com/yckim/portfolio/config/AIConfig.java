@@ -38,7 +38,7 @@ public class AIConfig {
                     try {
                         return method.invoke(geminiEmbedding, args);
                     } catch (InvocationTargetException e) {
-                        System.err.println("🚨 Gemini 임베딩 실패! Ollama로 Fallback 시도 중...: " + e.getTargetException().getMessage());
+                        System.err.println("Failed to Gemini Embedding! Ollama Fallback...: " + e.getTargetException().getMessage());
                         return method.invoke(ollamaEmbedding, args);
                     }
                 }
